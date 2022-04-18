@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="FileRename.Views.SequenceConfigView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FileRename.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="500" d:Background="#2A2B34">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="5">
+            <StackPanel>
+                <Label Content="Seperator" />
+                <TextBox Margin="0,5,0,0" Text="{Binding Seperator, UpdateSourceTrigger=PropertyChanged}" TextChanged="OnTextBoxChange">
+                    <TextBox.ToolTip>
+                        <TextBlock FontSize="12">
+                            Add seperator for suffix
+                        </TextBlock>
+                    </TextBox.ToolTip>
+                </TextBox>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1" Margin="5">
+            <StackPanel>
+                <Label Content="Sequence Start" />
+                <TextBox Margin="0,5,0,0" Text="{Binding SequenceStart, UpdateSourceTrigger=PropertyChanged}" TextChanged="OnTextBoxChange">
+                    <TextBox.ToolTip>
+                        <TextBlock FontSize="12">
+                            Add a number or alphabet character as the sequence start
+                        </TextBlock>
+                    </TextBox.ToolTip>
+                </TextBox>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

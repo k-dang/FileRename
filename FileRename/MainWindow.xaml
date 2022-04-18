@@ -1,0 +1,150 @@
+﻿<adonisControls:AdonisWindow x:Class="FileRename.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+        xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+        xmlns:views="clr-namespace:FileRename.Views"
+        xmlns:vms="clr-namespace:FileRename.ViewModels"
+        mc:Ignorable="d"
+        Title="FileRenamer" Height="750" Width="650" d:Background="#2A2B34">
+    <Window.Style>
+        <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}"/>
+    </Window.Style>
+    <Window.Resources>
+        <Style 
+            x:Key="IconButtonStyle"
+            BasedOn="{StaticResource {x:Type Button}}"
+            TargetType="Button">
+            <Setter Property="Background" Value="{DynamicResource {x:Static adonisUi:Brushes.Layer0BackgroundBrush}}" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button Margin="5,0,5,0" Click="Folder_Select_Click" Style="{StaticResource IconButtonStyle}">
+                <Image Width="16" Height="16" Source="{StaticResource OpenFolderImage}" />
+            </Button>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Label VerticalAlignment="Center" Grid.Column="1" Content="Selected Folder : " />
+                <TextBlock VerticalAlignment="Center" Grid.Column="2" Text="{Binding SelectedFolderPath}" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Margin="5">
+                <TextBlock VerticalAlignment="Center">Rename Mode</TextBlock>
+            </Grid>
+
+            <Grid Grid.Column="1" Margin="5">
+                <ComboBox ItemsSource="{Binding RenameModes}" SelectedItem="{Binding SelectedRenameMode}" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.Resources>
+                <DataTemplate DataType="{x:Type vms:SequenceConfigViewModel}">
+                    <views:SequenceConfigView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:AlternatingConfigViewModel}">
+                    <views:AlternatingConfigView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:CustomConfigViewModel}">
+                    <views:CustomConfigView />
+                </DataTemplate>
+            </Grid.Resources>
+
+            <ContentControl Content="{Binding CurrentConfigViewModel}" />
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <GroupBox Grid.Column="0" Margin="5">
+                <GroupBox.Header>
+                    Current Files in Folder
+                </GroupBox.Header>
+                <ListBox ItemsSource="{Binding FileNames}" SelectionMode="Multiple" x:Name="FilesListBox" SelectionChanged="FilesListBox_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
+
+            <GroupBox Grid.Column="1" Margin="5">
+                <GroupBox.Header>
+                    Preview
+                </GroupBox.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0" HorizontalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding PreviewFileNames}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="0,4,0,4" Text="{Binding}" TextWrapping="Wrap" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </GroupBox>
+        </Grid>
+
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <CheckBox
+                    x:Name="SelectAllBox"
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center" 
+                    Checked="CheckBox_Checked" 
+                    Unchecked="CheckBox_Unchecked"
+                    IsChecked="{Binding IsSelectAllChecked}"
+                    Content="Select all" />
+            </Grid>
+
+            <Grid Grid.Column="1" Margin="5">
+                <Button
+                    x:Name="btnRename" 
+                    Command="{Binding RenameCommand}" 
+                    CommandParameter="{Binding ElementName=FilesListBox, Path=SelectedItems}"
+                    Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}"
+                >
+                    Rename
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</adonisControls:AdonisWindow>
