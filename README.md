@@ -10,9 +10,11 @@ Selected files will be renamed in sequencial order based on the start
 Sequence mode can accept numbers and alphabet characters, but alphabet characters are limited to length of 1.
 
 Using numbers as starting
+
 ![sequence image numeric](images/sequence_1.PNG)
 
 Using alphabet character as starting
+
 ![sequence image alphabet](images/sequence_2.PNG)
 
 ### Alternating
