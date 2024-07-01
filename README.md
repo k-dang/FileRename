@@ -30,3 +30,9 @@ use `generateTestFiles.sh` to generate test files in a specific directory
 ```bash
 sh generateTestFiles.sh <directory> <numOfFiles>
 ```
+
+# TODO 
+
+export option
+rename entire files + sequence / alternating
+if only file renaming stuff could just targer numbers only
